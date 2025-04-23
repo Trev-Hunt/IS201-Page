@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Which Big Cat Are You?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jungle+Adventurer&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1552410260-5a84d3f3c8b4');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      font-family: 'Jungle Adventurer', cursive;
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #ffcc00;
+    }
+
+    .quiz-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .question {
+      margin: 20px 0;
+      font-size: 1.2em;
+    }
+
+    .result {
+      margin-top: 30px;
+    }
+
+    img {
+      width: 300px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1em;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      background-color: #ffa500;
+      color: white;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 25px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #e69500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <h1>Which Big Cat Are You?</h1>
+    <input type="text" id="username" placeholder="Enter your name" />
+
+    <div class="question">
+      <p>1. What's your ideal weekend activity?</p>
+      <label><input type="radio" name="q1" value="tiger"> Exploring the unknown</label><br>
+      <label><input type="radio" name="q1" value="lion"> Hanging out with friends</label><br>
+      <label><input type="radio" name="q1" value="leopard"> Chilling solo with a book</label>
+    </div>
+
+    <div class="question">
+      <p>2. What's your leadership style?</p>
+      <label><input type="radio" name="q2" value="lion"> Lead the group</label><br>
+      <label><input type="radio" name="q2" value="tiger"> Lead by example</label><br>
+      <label><input type="radio" name="q2" value="leopard"> I prefer independence</label>
+    </div>
+
+    <div class="question">
+      <p>3. Pick your favorite environment:</p>
+      <label><input type="radio" name="q3" value="leopard"> Jungle</label><br>
+      <label><input type="radio" name="q3" value="lion"> Savanna</label><br>
+      <label><input type="radio" name="q3" value="tiger"> Forest</label>
+    </div>
+
+    <button onclick="showResult()">Reveal My Big Cat</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <audio id="roar-sound" src="./assets/Tiger Roar Sound Effect.mp3" preload="auto"></audio>
+
+  <script>
+    function showResult() {
+      const name = document.getElementById('username').value || 'You';
+      const answers = [
+        document.querySelector('input[name="q1"]:checked')?.value,
+        document.querySelector('input[name="q2"]:checked')?.value,
+        document.querySelector('input[name="q3"]:checked')?.value
+      ];
+
+      if (answers.includes(undefined)) {
+        alert("Please answer all questions.");
+        return;
+      }
+
+      const count = { tiger: 0, lion: 0, leopard: 0 };
+      answers.forEach(ans => count[ans]++);
+
+      let result = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
+
+      const results = {
+        tiger: {
+          text: `${name}, you're a TIGER! Fierce, focused, and fearless.`,
+          img: "assets/img/tiger-growling.jpg"
+        },
+        lion: {
+          text: `${name}, you're a LION! Bold, social, and a natural leader.`,
+          img: "assets/img/lion.webp"
+        },
+        leopard: {
+          text: `${name}, you're a LEOPARD! Mysterious, stealthy, and clever.`,
+          img: "assets/img/African_leopard_male_(cropped).jpg"
+        }
+      };
+
+      document.getElementById("result").innerHTML = `
+        <h2>${results[result].text}</h2>
+        <img src="${results[result].img}" alt="${result}">
+      `;
+
+      document.getElementById("roar-sound").play();
+    }
+  </script>
+  <footer style="text-align: center; margin-top: 50px; padding: 20px; background-color: #f4f4f4;">
+    <p>
+      <a href="scratch.html" style="text-decoration: none; color: #333; font-weight: bold;">
+        ← Back to My Tiger Learning Page
+      </a>
+    </p>
+  </footer>
+  
+</body>
+</html>
